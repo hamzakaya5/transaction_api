@@ -1,0 +1,31 @@
+# ---- Base build image ----
+FROM node:20-alpine AS build
+
+WORKDIR /app
+
+# Install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy source files
+COPY . .
+
+# Build TypeScript to dist/
+RUN npm run build
+
+# ---- Production image ----
+FROM node:20-alpine AS prod
+
+WORKDIR /app
+
+# Only copy what’s needed for runtime
+COPY package*.json ./
+RUN npm install --only=production
+
+COPY --from=build /app/dist ./dist
+
+# Expose NestJS port
+EXPOSE 8080
+
+# Start NestJS app (compiled JS in dist/)
+CMD ["node", "dist/main.js"]
