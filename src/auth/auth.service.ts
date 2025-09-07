@@ -23,9 +23,9 @@ export class AuthService {
     const randomInt = Math.floor(Math.random() * (4 - 0 + 1)) + 0;; 
     let role: string; 
     if (randomInt === 0) {
-      role = "Admin"
+      role = "admin"
     }else {
-      role = "Vendor"
+      role = "vendor"
     }
 
     const user = await this.userModel.create({
@@ -46,8 +46,10 @@ export class AuthService {
     const valid = await bcrypt.compare(password, db_pass);
 
     if (!valid) throw new UnauthorizedException('Invalid credentials');
+    
+    const person = user.dataValues;
 
-    const payload = { sub: user.id, username: user.username, role: user.role };
+    const payload = { sub: person.id, username: person.username, role: person.role };
     const token = jwt.sign(payload, 'secretKey', { expiresIn: '1h' });
 
     await this.redisService.set(`session:${user.id}`, token, 3600);

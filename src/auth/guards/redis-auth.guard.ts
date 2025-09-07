@@ -19,6 +19,7 @@ export class RedisAuthGuard implements CanActivate {
       if (!session || session !== token) throw new UnauthorizedException('Invalid session');
 
       req.user = payload;
+      console.log("here",req.user, payload, session);
       return true;
     } catch {
       throw new UnauthorizedException('Unauthorized');

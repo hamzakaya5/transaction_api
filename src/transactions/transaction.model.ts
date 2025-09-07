@@ -18,8 +18,8 @@ export class Transaction extends Model<Transaction> {
   })
   status: string;
 
-  @Column({ type: DataType.JSONB })
-  pgExtraInfo: any;
+  @Column({ type: DataType.JSONB, allowNull: false, field: 'pgextrainfo' })
+  pgextrainfo: any;
 
   @ForeignKey(() => User)
   @Column
