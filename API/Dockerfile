@@ -1,29 +1,29 @@
-# ---- Base Node image ----
-FROM node:20-alpine AS base
+# ---- Build stage ----
+FROM node:20-alpine AS build
 
-# Set working directory
 WORKDIR /app
 
-# ---- Install dependencies ----
+# Install all dependencies (prod + dev)
 COPY package*.json ./
-RUN npm install --production=false
+RUN npm install --include=dev
 
-# ---- Build the app ----
+# Copy source and build
 COPY . .
 RUN npm run build
 
-# ---- Production image ----
+# ---- Production stage ----
 FROM node:20-alpine AS prod
 
 WORKDIR /app
 
-# Copy only necessary files from build stage
-COPY --from=base /app/package*.json ./
-COPY --from=base /app/node_modules ./node_modules
-COPY --from=base /app/dist ./dist
+# Install only production dependencies
+COPY package*.json ./
+RUN npm install --only=production
 
-# Expose port
-EXPOSE 8080
+# Copy build output from build stage
+COPY --from=build /app/dist ./dist
 
-# Start the app
-CMD ["node", "dist/main.js"]
+EXPOSE 3000
+
+# Use Nest's production script
+CMD ["npm", "run", "start:prod"]

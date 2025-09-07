@@ -1,3 +1,8 @@
+
+# Define a shared memory zone for rate limiting
+# 10m zone size can track ~160k unique IPs
+limit_req_zone $binary_remote_addr zone=api_limit:10m rate=10r/s;
+
 upstream backend_servers {
     {{BACKEND_SERVERS}}
 }
@@ -6,6 +11,9 @@ server {
     listen 8080;
 
     location / {
+        # Apply rate limit (burst allows short spikes)
+        limit_req zone=api_limit burst=20 nodelay;
+
         proxy_pass http://backend_servers;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;

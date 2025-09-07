@@ -6,7 +6,7 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   private client: RedisClientType;
 
   async onModuleInit() {
-    this.client = createClient({ url: 'redis://localhost:6379', password: 'mypassword' });
+    this.client = createClient({ url: 'redis://redis:6379', password: 'mypassword' });
     this.client.on('error', (err) => console.error('❌ Redis Error', err));
     await this.client.connect();
     console.log('✅ Redis connected');

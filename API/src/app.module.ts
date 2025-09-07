@@ -9,13 +9,16 @@ import { TransactionModule } from './transactions/transaction.module';
   imports: [
     SequelizeModule.forRoot({
       dialect: 'postgres',
-      host: 'localhost',
+      host: 'postgres',
       port: 5432,
       username: 'myuser',
       password: 'mypassword',
       database: 'mydb',
       autoLoadModels: true,
       synchronize: true,
+      retryAttempts: 10,      // try 10 times
+      retryDelay: 5000,   
+      logging: (msg) => console.log('Sequelize Log:', msg),
     }),
     UsersModule,
     AuthModule,

@@ -15,8 +15,10 @@ services:
       REDIS_PORT: 6379
       REDIS_PASSWORD: mypassword
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
 
   postgres:
     build:
@@ -26,11 +28,17 @@ services:
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypassword
       POSTGRES_DB: mydb
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - backend_net
 
   redis:
     image: redis:7.4
+    command: redis-server --requirepass mypassword
     networks:
       - backend_net
 
