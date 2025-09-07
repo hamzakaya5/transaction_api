@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "79eeec0d-5d3f-45ed-9ab3-1e72ba08aa70",
+		"name": "Qlub transaction project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29001341"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "email",
+								"value": "kaya.hamza59@hotmail.com",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "username",
+								"value": "hamza",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "password",
+								"value": "1234",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"username\",\n  \"email\": \"email\",\n  \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "email",
+								"value": "kaya.hamza59@hotmail.com",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "username",
+								"value": "hamza",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "password",
+								"value": "1234",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"<username>\",\n  \"email\": \"email\",\n  \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transactions",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "admin_token",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiaGFtemEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTcyNDY0MzYsImV4cCI6MTc1NzI1MDAzNn0.qxoyc6n2Xr3mrzL0X2TBjB4126uA5Vxi2DQ2xA7n35M",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "vendor",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoiaGFtIiwicm9sZSI6InZlbmRvciIsImlhdCI6MTc1NzI0NzA4OSwiZXhwIjoxNzU3MjUwNjg5fQ.2AA4iUXwpn1Z9bCESbWMkOCcT91KNnDiRX4dlWwb6gk",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amount\": 13,\n  \"currency\": \"USD\",\n  \"pgextrainfo\": {\n    \"cardBrand\": \"Visa1\",\n    \"cardLast4\": \"1234\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/transactions/create",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"transactions",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
