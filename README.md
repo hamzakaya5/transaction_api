@@ -57,7 +57,17 @@ src
 
 ---
 
-## PostgreSQL Indexes
+## PostgreSQL
+  * Database structure is given in the mydb.sql file for building process.
+
+  * If database needed to be backed up this command can be used
+    - docker exec -t <postgres_container_name> pg_dump -U myuser -d mydb > backup.sql
+
+  * During build process, this backup file can be replaced with mydb.sql file in DevOps/database directory with the "mydb.sql" name  
+
+
+## Database Indexes
+
   * I created index with this command in transactions table 
   ```
   CREATE INDEX idx_transactions_status ON transactions(status);
