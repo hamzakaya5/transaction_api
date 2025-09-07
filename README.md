@@ -57,6 +57,14 @@ src
 
 ---
 
+## PostgreSQL Indexes
+  * I created index with this command in transactions table 
+  ```
+  CREATE INDEX idx_transactions_status ON transactions(status);
+  CREATE INDEX idx_transactions_created_at ON transactions("createdAt");
+  CREATE INDEX idx_transactions_belong_to ON transactions("belongTo");
+  ```
+
 ## Environment Variables
 
 The backend reads configuration from environment variables (I am giving environment in docker compose but not using for now for ease to use):
@@ -124,3 +132,13 @@ docker compose down
 
 * Endpoints for listing all transactions requires admin privilage. Users can only see their own transactions if they are vendor.
 * Filter endpoint is used for filtering with necessary informations and admin can see all the transactions with filtering, but vendors only see their transactions.
+
+
+## Test Script
+
+  * In the repository, there is a test.sh file.
+  * After starting backend application, use this command to make it executable -- "chmod +x test.sh"
+  * then use this command "./test.sh"
+  * It will sign in to application and gets the token, then creates the transactions and lists them.
+
+
